@@ -14,15 +14,14 @@ public class LibraryMenu {
 
 
     public void mainMenu(){
-        System.out.println("이름");
+        System.out.print("이름 입력 : ");
         String name = sc.next();
         sc.nextLine();
-        System.out.println("나이");
+        System.out.print("나이 입력 : ");
         int age = sc.nextInt();
         sc.nextLine();
-        System.out.println("성별");
+        System.out.print("성별 입력 : ");
         char gender = sc.nextLine().charAt(0);
-
 
             System.out.println("==== 메뉴 ====");
             System.out.println("1. 마이페이지");
@@ -33,7 +32,6 @@ public class LibraryMenu {
             int selectNo = sc.nextInt();
             String keyword = "";
             int index = 0;
-
 
             switch (selectNo) {
                 case 1:
@@ -67,17 +65,10 @@ public class LibraryMenu {
         System.out.println("대여할 도서 번호 선택");
         int index = sc.nextInt();
         int result = lm.rentBook(index);
-// 도서대여를 위해 도서번호를 알아야된다.  selectAll() 메소드 호출
-// “대여할 도서 번호 선택 : ” >> 입력 받음 (index)
-// LibraryManager의 rentBook() 에 전달
-// 그 결과 값을 result로 받고 그 result가
-// 0일 경우  “성공적으로 대여되었습니다.” 출력
-// 1일 경우  “나이 제한으로 대여 불가능입니다.” 출력
-// 2일 경우  “성공적으로 대여되었습니다. 요리학원 쿠폰이 발급되었습니다. 마이페이지를 통해 확인하세요” 출력
 
         switch (result) {
             case 0 :
-                System.out.println("성공적으로 대야되었습니다.");
+                System.out.println("성공적으로 대여되었습니다.");
             case 1 :
                 System.out.println("나이 제한으로 대여 불가능입니다.");
             case 2 :
