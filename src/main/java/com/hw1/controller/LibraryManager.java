@@ -1,14 +1,17 @@
 package com.hw1.controller;
 
+import com.hw1.model.dto.AniBookDTO;
 import com.hw1.model.dto.BookDTO;
 import com.hw1.model.dto.MemberDTO;
 
+import java.awt.print.Book;
 import java.lang.reflect.Member;
 
 public class LibraryManager {
-    MemberDTO mem = null;
 
-    BookDTO[] bList = new BookDTO[5];
+    private MemberDTO mem = null;
+
+    private BookDTO[] bList = new BookDTO[5];
 
     public void insertMember(Member mem){
 
@@ -32,7 +35,21 @@ public class LibraryManager {
 
     public int rentBook(int index){
 
-        return index;
+        int result = 0;
+
+        BookDTO[] bList = new BookDTO[index];
+        AniBookDTO aniBookDTO = new AniBookDTO();
+        MemberDTO memberDTO = new MemberDTO();
+        int accessAge = aniBookDTO.getAccessAge();
+        int age = memberDTO.getAge();
+
+        if (accessAge > age) {
+            result = 1;
+        } else {
+            result = 2;
+        }
+
+        return result;
     }
 
 }
