@@ -40,8 +40,8 @@ public class LibraryManager {
         int age = sc.nextInt();
         int result = 0;
 
-        AniBookDTO aniBookDTO = new AniBookDTO();
-        MemberDTO memberDTO = new MemberDTO();
+        AniBookDTO aniBookDTO = new AniBookDTO("title", "author", "String publisher", 20);
+        MemberDTO memberDTO = new MemberDTO("name", 15, 'F');
 
         int accessAge = aniBookDTO.getAccessAge();
 
