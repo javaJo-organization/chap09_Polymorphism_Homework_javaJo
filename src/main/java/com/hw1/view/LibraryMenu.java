@@ -1,82 +1,100 @@
 package com.hw1.view;
 
 import com.hw1.controller.LibraryManager;
-import com.hw1.model.dto.AniBookDTO;
+import com.hw1.model.dto.BookDTO;
 import com.hw1.model.dto.MemberDTO;
+
+
 import java.util.Scanner;
 
 public class LibraryMenu {
 
-    LibraryManager lm = new LibraryManager();
-
+    private LibraryManager lm = new LibraryManager();
     Scanner sc = new Scanner(System.in);
 
+    public void mainMenu() {
 
-
-    public void mainMenu(){
-        System.out.print("이름 입력 : ");
-        String name = sc.next();
-        sc.nextLine();
-        System.out.print("나이 입력 : ");
+        System.out.print("이름을 입력하세요 : ");
+        String name = sc.nextLine();
+        System.out.print("나이을 입력하세요 : ");
         int age = sc.nextInt();
         sc.nextLine();
-        System.out.print("성별 입력 : ");
+        System.out.print("성별을 입력하세요 : ");
         char gender = sc.nextLine().charAt(0);
-        lm.insertMember(new Member(name, age, gender));
 
-            System.out.println("==== 메뉴 ====");
+        lm.insertMember(new MemberDTO(name, age, gender));
+
+        do {
+            System.out.println("========= 메뉴 ========");
             System.out.println("1. 마이페이지");
             System.out.println("2. 도서 전체 조회");
             System.out.println("3. 도서 검색");
             System.out.println("4. 도서 대여하기");
             System.out.println("0. 프로그램 종료하기");
-            int selectNo = sc.nextInt();
-            String keyword = "";
-            int index = 0;
+            System.out.print("메뉴 선택 : ");
+            int menu = sc.nextInt();
+            sc.nextLine();
 
-            switch (selectNo) {
+            switch (menu) {
                 case 1:
-                    lm.myInfo();
+                    System.out.println(lm.myInfo());
                     break;
                 case 2:
-                    lm.selectAll();
+                    selectAll();
                     break;
                 case 3:
-                    lm.searchBook(keyword);
+                    searchBook();
                     break;
                 case 4:
-                    lm.rentBook(index);
+                    rentBook();
+                    break;
+                case 0:
+                    System.out.println("프로그램을 종료합니다.");
+                    return;
+                default:
+                    System.out.println("다시 입력해주세요");
                     break;
             }
-
-            sc.close();
-
+        }while (true);
     }
 
-    public void selectAll(){
+    public void selectAll() {
+        BookDTO[] bList = lm.selectAll();
 
+        System.out.println("=== 전체 도서 목록 조회 ===");
+        for (int i = 0; i < bList.length; i++) {
+            System.out.println(i + "번 도서 : " + bList[i]);
+        }
     }
 
-    public void searchBook(){
+    public void searchBook() {
+        System.out.print("검색할 도서 제목 키워드: ");
+        String keyword = sc.nextLine();
 
+        BookDTO[] searchList = lm.searchBook(keyword);
+
+        System.out.println("=== 검색 도서 목록 조회 ===");
+        for (BookDTO bk : searchList) {
+            if (bk != null)
+                System.out.println(bk);
+        }
     }
 
-    public void rentBook(){
-        lm.selectAll();
-        System.out.println("대여할 도서 번호 선택");
+    public void rentBook() {
+
+        selectAll();
+
+        System.out.print("대여할 도서 번호 : ");
         int index = sc.nextInt();
+
         int result = lm.rentBook(index);
 
-        switch (result) {
-            case 0 :
-                System.out.println("성공적으로 대여되었습니다.");
-            case 1 :
-                System.out.println("나이 제한으로 대여 불가능입니다.");
-            case 2 :
-                System.out.println("성공적으로 대여되었습니다. 요리학원 쿠폰이 발급되었습니다.\n" +
-                        " 마이페이지를 통해 확인하세요");
-        }
-
+        if (result == 0)
+            System.out.println("성공적으로 대여되었습니다.");
+        else if (result == 1)
+            System.out.println("나이제한으로 대여 불가능 입니다.");
+        else
+            System.out.println("성공적으로 대여되었습니다. 요리학원 쿠폰이 발급되었습니다. ");
     }
 
 }
