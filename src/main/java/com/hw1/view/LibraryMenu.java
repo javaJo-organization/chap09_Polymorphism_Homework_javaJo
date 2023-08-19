@@ -22,6 +22,7 @@ public class LibraryMenu {
         sc.nextLine();
         System.out.print("성별 입력 : ");
         char gender = sc.nextLine().charAt(0);
+        lm.insertMember(new Member(name, age, gender));
 
             System.out.println("==== 메뉴 ====");
             System.out.println("1. 마이페이지");
