@@ -35,20 +35,18 @@ public class LibraryManager {
     }
 
     public int rentBook(int index){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("나이 입력");
-        int age = sc.nextInt();
+
         int result = 0;
 
-        AniBookDTO aniBookDTO = new AniBookDTO("title", "author", "String publisher", 20);
-        MemberDTO memberDTO = new MemberDTO("name", 15, 'F');
-
-        int accessAge = aniBookDTO.getAccessAge();
-
-        if (accessAge > age) {
-            result = 1;
-        } else {
-            result = 2;
+        if(bList[index] instanceof AniBook) {
+            if(((AniBook)bList[index]).getAccessAge() > mem.getAge()) {
+                result = 1;
+            }
+        }else if(bList[index] instanceof CookBook) {
+            if(((CookBook)bList[index]).isCoupon()) {
+                mem.setCouponCount(mem.getCouponCount() + 1);
+                result = 2;
+            }
         }
         return result;
     }
